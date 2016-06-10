@@ -27,7 +27,7 @@
             <call-simple-method method-name="copyProject"/>
             <else>
                 <set field="parameters.currentStatusId" value="PRJ_ACTIVE"/>
-                <call-simple-method method-name="createWorkEffort" xml-resource="component://workeffort/script/org/ofbiz/workeffort/workeffort/WorkEffortSimpleServices.xml"/>
+                <call-simple-method method-name="createWorkEffort" xml-resource="component://workeffort/minilang/workeffort/WorkEffortSimpleServices.xml"/>
             </else>
         </if-not-empty>
         <set field="parameters.workEffortId" from-field="newEntity.workEffortId"/>
@@ -163,11 +163,11 @@
         <if-empty field="parameters.statusId">
             <set field="parameters.statusId" value="PTS_CREATED"/>
         </if-empty>
-        <call-simple-method method-name="createWorkEffort" xml-resource="component://workeffort/script/org/ofbiz/workeffort/workeffort/WorkEffortSimpleServices.xml"/>
+        <call-simple-method method-name="createWorkEffort" xml-resource="component://workeffort/minilang/workeffort/WorkEffortSimpleServices.xml"/>
         <set field="parameters.workEffortId" from-field="newEntity.workEffortId"/>
         <!-- optionally assign to party -->
         <if-not-empty field="parameters.partyId">
-            <call-simple-method method-name="assignPartyToWorkEffort" xml-resource="component://workeffort/script/org/ofbiz/workeffort/workeffort/WorkEffortSimpleServices.xml"/>
+            <call-simple-method method-name="assignPartyToWorkEffort" xml-resource="component://workeffort/minilang/workeffort/WorkEffortSimpleServices.xml"/>
         </if-not-empty>
         <!-- optionally enter estimated time and required skill -->
         <if-not-empty field="parameters.estimatedHours">
@@ -175,7 +175,7 @@
             <if-empty field="parameters.skillTypeId">
                 <set field="parameters.skillTypeId" value="_NA_"/>
             </if-empty>
-            <call-simple-method method-name="createWorkEffortSkillStandard" xml-resource="component://workeffort/script/org/ofbiz/workeffort/workeffort/WorkEffortSimpleServices.xml"/>
+            <call-simple-method method-name="createWorkEffortSkillStandard" xml-resource="component://workeffort/minilang/workeffort/WorkEffortSimpleServices.xml"/>
         </if-not-empty>
     </simple-method>
 
@@ -267,7 +267,7 @@
                     </if-compare>
                     <else>
                         <!-- new assignment -->
-                        <call-simple-method method-name="assignPartyToWorkEffort" xml-resource="component://workeffort/script/org/ofbiz/workeffort/workeffort/WorkEffortSimpleServices.xml"/>
+                        <call-simple-method method-name="assignPartyToWorkEffort" xml-resource="component://workeffort/minilang/workeffort/WorkEffortSimpleServices.xml"/>
                     </else>
                 </if-not-empty>
             </else>
@@ -290,7 +290,7 @@
         <if-empty field="status">
             <now-timestamp field="parameters.actualCompletionDate"/>
             <set field="parameters.currentStatusId" value="PTS_COMPLETED"/>
-            <call-simple-method method-name="updateWorkEffort" xml-resource="component://workeffort/script/org/ofbiz/workeffort/workeffort/WorkEffortSimpleServices.xml"/>
+            <call-simple-method method-name="updateWorkEffort" xml-resource="component://workeffort/minilang/workeffort/WorkEffortSimpleServices.xml"/>
             <!-- check for related customer request, set these too to completed -->
             <entity-and list="custRequests" entity-name="CustRequestWorkEffort">
                 <field-map field-name="workEffortId" from-field="parameters.workEffortId"/>
@@ -487,7 +487,7 @@
             <set field="parameters.partyId" from-field="timesheet.partyId"/>
             <set field="parameters.roleTypeId" from-field="projectAssign.roleTypeId"/>
             <set field="parameters.statusId" value="PAS_ASSIGNED"/>
-            <call-simple-method method-name="assignPartyToWorkEffort" xml-resource="component://workeffort/script/org/ofbiz/workeffort/workeffort/WorkEffortSimpleServices.xml"/>
+            <call-simple-method method-name="assignPartyToWorkEffort" xml-resource="component://workeffort/minilang/workeffort/WorkEffortSimpleServices.xml"/>
         </if-empty>
         <check-errors/>
 
@@ -628,7 +628,7 @@
         </if-not-empty>
         <set field="parameters.currentStatusId" value="PRJ_ACTIVE"/>
         <clear-field field="parameters.workEffortId"/>
-        <call-simple-method method-name="createWorkEffort" xml-resource="component://workeffort/script/org/ofbiz/workeffort/workeffort/WorkEffortSimpleServices.xml"/>
+        <call-simple-method method-name="createWorkEffort" xml-resource="component://workeffort/minilang/workeffort/WorkEffortSimpleServices.xml"/>
         <set field="newProjectId" from-field="newEntity.workEffortId"/>
 
         <!-- copy assigned parties -->
@@ -640,7 +640,7 @@
                 <set field="parameters.partyId" from-field="party.partyId"/>
                 <set field="parameters.roleTypeId" from-field="party.roleTypeId"/>
                 <set field="parameters.statusId" value="PAS_ASSIGNED"/>
-                <call-simple-method method-name="assignPartyToWorkEffort" xml-resource="component://workeffort/script/org/ofbiz/workeffort/workeffort/WorkEffortSimpleServices.xml"/>
+                <call-simple-method method-name="assignPartyToWorkEffort" xml-resource="component://workeffort/minilang/workeffort/WorkEffortSimpleServices.xml"/>
             </iterate>
         </if-not-empty>
 
@@ -658,7 +658,7 @@
                 <set field="parameters.workEffortParentId" from-field="newProjectId"/>
                 <set field="parameters.currentStatusId" value="_NA_"/>
                 <clear-field field="parameters.workEffortId"/>
-                <call-simple-method method-name="createWorkEffort" xml-resource="component://workeffort/script/org/ofbiz/workeffort/workeffort/WorkEffortSimpleServices.xml"/>
+                <call-simple-method method-name="createWorkEffort" xml-resource="component://workeffort/minilang/workeffort/WorkEffortSimpleServices.xml"/>
                 <set field="newPhaseId" from-field="newEntity.workEffortId"/>
 
                 <get-related value-field="phase" relation-name="ChildWorkEffort" list="tasks"/>
@@ -676,7 +676,7 @@
                         <set field="parameters.workEffortParentId" from-field="newPhaseId"/>
                         <set field="parameters.currentStatusId" value="PTS_CREATED"/>
                         <clear-field field="parameters.workEffortId"/>
-                        <call-simple-method method-name="createWorkEffort" xml-resource="component://workeffort/script/org/ofbiz/workeffort/workeffort/WorkEffortSimpleServices.xml"/>
+                        <call-simple-method method-name="createWorkEffort" xml-resource="component://workeffort/minilang/workeffort/WorkEffortSimpleServices.xml"/>
                     </iterate>
                 </if-not-empty>
             </iterate>
@@ -860,7 +860,7 @@
                 <!-- get the planned/actual hours -->
                 <set field="lowInfo" from-field="task"/>
                 <set field="parameters.hoursPartyId" from-field="task.partyId"/>
-                <call-simple-method method-name="getHours" xml-resource="component://workeffort/script/org/ofbiz/workeffort/workeffort/WorkEffortSimpleServices.xml"/>
+                <call-simple-method method-name="getHours" xml-resource="component://workeffort/minilang/workeffort/WorkEffortSimpleServices.xml"/>
                 <set field="projectParty.plannedHours" from-field="highInfo.plannedHours" type="Double"/>
                 <set field="projectParty.actualHours" from-field="highInfo.actualHours" type="Double"/>
             </iterate>
@@ -919,7 +919,7 @@
                 <set field="lowInfo" from-field="task"/>
                 <set field="parameters.hoursPartyId" from-field="task.partyId"/>
                 <get-related-one value-field="task" relation-name="WorkEffort" to-value-field="lowInfo"/>
-                <call-simple-method method-name="getHours" xml-resource="component://workeffort/script/org/ofbiz/workeffort/workeffort/WorkEffortSimpleServices.xml"/>
+                <call-simple-method method-name="getHours" xml-resource="component://workeffort/minilang/workeffort/WorkEffortSimpleServices.xml"/>
                 <set field="taskParty.plannedHours" from-field="highInfo.plannedHours" type="Double"/>
                 <set field="taskParty.actualHours" from-field="highInfo.actualHours" type="Double"/>
                 <set field="taskParty.originalActualHours" from-field="highInfo.originalActualHours" type="Double"/>
@@ -1371,7 +1371,7 @@
                     <else>
                         <!-- create new timesheet -->
                         <set field="parameters.requiredDate" from-field="parameters.fromDate"/>
-                        <call-simple-method method-name="createTimesheetForThisWeek" xml-resource="component://workeffort/script/org/ofbiz/workeffort/timesheet/TimesheetServices.xml"/>
+                        <call-simple-method method-name="createTimesheetForThisWeek" xml-resource="component://workeffort/minilang/timesheet/TimesheetServices.xml"/>
                         <set field="parameters.timesheetId" from-field="newEntity.timesheetId"/>
                     </else>
                 </if-not-empty>
@@ -1386,9 +1386,9 @@
           <first-from-list entry="taskRole" list="taskRoles"/>
           <set field="parameters.roleTypeId" from-field="taskRole.roleTypeId"/>
           <set field="parameters.statusId" value="PAS_ASSIGNED"/>
-          <call-simple-method method-name="assignPartyToWorkEffort" xml-resource="component://workeffort/script/org/ofbiz/workeffort/workeffort/WorkEffortSimpleServices.xml"/>
+          <call-simple-method method-name="assignPartyToWorkEffort" xml-resource="component://workeffort/minilang/workeffort/WorkEffortSimpleServices.xml"/>
         </if-empty>
-        <call-simple-method method-name="createTimeEntry" xml-resource="component://workeffort/script/org/ofbiz/workeffort/timesheet/TimesheetServices.xml"/>
+        <call-simple-method method-name="createTimeEntry" xml-resource="component://workeffort/minilang/timesheet/TimesheetServices.xml"/>
     </simple-method>
 
     <simple-method method-name="addProjectTimeToNewInvoice" short-description="add all reported time on all completed timesheets from all workefforts for a project">
